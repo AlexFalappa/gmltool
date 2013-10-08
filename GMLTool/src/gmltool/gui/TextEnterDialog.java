@@ -8,15 +8,20 @@ package gmltool.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
+import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
+import javax.xml.stream.events.XMLEvent;
 
 /**
  *
@@ -35,6 +40,9 @@ public class TextEnterDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form TextEnterDialog
+     *
+     * @param parent
+     * @param modal
      */
     public TextEnterDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -46,10 +54,15 @@ public class TextEnterDialog extends javax.swing.JDialog {
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), cancelName);
         ActionMap actionMap = getRootPane().getActionMap();
         actionMap.put(cancelName, new AbstractAction() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 doClose(RET_CANCEL);
             }
         });
+
+        // prepare the StAX factory
+        fct = XMLInputFactory.newFactory();
+        fct.setProperty(XMLInputFactory.IS_NAMESPACE_AWARE, false);
     }
 
     /**
@@ -168,33 +181,42 @@ public class TextEnterDialog extends javax.swing.JDialog {
 
     private void bCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCheckActionPerformed
         try {
-            final XMLInputFactory fct = XMLInputFactory.newFactory();
-            fct.setProperty(XMLInputFactory.IS_NAMESPACE_AWARE, false);
-            XMLStreamReader xmlsr = fct.createXMLStreamReader(new StringReader(getGmlText()));
-            xmlsr.nextTag();
-            System.out.println(xmlsr.getLocalName());
-            xmlsr.nextTag();
-            System.out.println(xmlsr.getLocalName());
-//            HashMap<String, String> nsMap = new HashMap<>();
-//            nsMap.put("", "http://www.opengis.net/gml");
-//            nsMap.put("gml", "http://www.opengis.net/gml");
-//            XmlOptions xopt = new XmlOptions();
-//            xopt.setLoadReplaceDocumentElement(new QName("http://www.opengis.net/gml", "Polygon"));
-//            xopt.setLoadAdditionalNamespaces(nsMap);
-//            xopt.setLoadSubstituteNamespaces(nsMap);
-//            xopt.setLoadLineNumbers();
-//            xopt.setLoadStripWhitespace();
-//            XmlObject xobj = XmlObject.Factory.parse(getGmlText(), xopt);
-//            XmlObject xobj = XmlObject.Factory.parse(getGmlText());
-//            XmlCursor xc = xobj.newCursor();
-//            xc.toFirstContentToken();
-//            System.out.println(xc.getName().getLocalPart());
-//            System.out.println(xc.getTextValue());
-//            xc.dispose();
-//        } catch (XmlException ex) {
-        } catch (XMLStreamException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Unrecognized GML fragment!", "Check failed", JOptionPane.ERROR_MESSAGE);
+            StringReader reader = new StringReader(getGmlTextWrapped());
+            XMLEventReader xrd = fct.createXMLEventReader(reader);
+            HashMap<String, ArrayList<String>> shapeCoords = new HashMap<>();
+            String shape = null;
+            while (xrd.hasNext()) {
+                XMLEvent xev = xrd.nextEvent();
+                System.out.println("ev=[" + xev.toString() + "]");
+                if (xev.isStartElement()) {
+                    String tagName = xev.asStartElement().getName().getLocalPart().toLowerCase();
+                    if (tagName.contains("polygon")) {
+                        shape = "poly";
+                    } else if (tagName.contains("circle")) {
+                        shape = "circle";
+                    } else if (tagName.contains("poslist")) {
+                        // skip attributes,comments and whitespace
+                        do {
+                            xev = xrd.nextEvent();
+                        } while (xrd.hasNext() && !xev.isCharacters());
+                        // store coords string
+                        assert shape != null;
+                        // see if there are similar shapes
+                        ArrayList<String> coords = shapeCoords.get(shape);
+                        if (coords == null) {
+                            // no similar shape create list of coords
+                            coords = new ArrayList<String>();
+                            shapeCoords.put(shape, coords);
+                        }
+                        // add coords to list of shape
+                        coords.add(xev.asCharacters().getData());
+                    }
+                }
+            }
+            xrd.close();
+        } catch (XMLStreamException xsex) {
+            System.err.println(xsex.getMessage());
+            JOptionPane.showMessageDialog(this, "Unrecognized or malformed GML fragment!", "Check failed", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_bCheckActionPerformed
 
@@ -202,6 +224,16 @@ public class TextEnterDialog extends javax.swing.JDialog {
         returnStatus = retStatus;
         setVisible(false);
         dispose();
+    }
+
+    public String getGmlText() {
+        return txGml.getText();
+    }
+
+    public String getGmlTextWrapped() {
+        StringBuilder sb = new StringBuilder("<root>");
+        sb.append(txGml.getText()).append("</root>");
+        return sb.toString();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -214,8 +246,5 @@ public class TextEnterDialog extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     private int returnStatus = RET_CANCEL;
-
-    String getGmlText() {
-        return txGml.getText();
-    }
+    private final XMLInputFactory fct;
 }
