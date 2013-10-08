@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WorldWindConfiguration version="1">
+    <LayerList>
+        <!--bottom-->
+        <Layer className="gov.nasa.worldwind.layers.StarsLayer" />
+        <Layer className="gov.nasa.worldwind.layers.SkyGradientLayer" />
+        <Layer className="gov.nasa.worldwind.layers.Earth.BMNGOneImage">
+            <Property name="MinActiveAltitude" value="3e6"/>
+        </Layer>
+        <Layer href="config/Earth/BMNGWMSLayer.xml" actuate="onLoad"/>
+        <Layer href="config/Earth/MSVirtualEarthAerialLayer.xml" actuate="onLoad" />
+        <Layer className="gov.nasa.worldwind.layers.Earth.CountryBoundariesLayer" actuate="onRequest" />
+        <Layer className="gov.nasa.worldwind.layers.Earth.NASAWFSPlaceNameLayer" actuate="onRequest" />
+        <Layer className="gov.nasa.worldwind.layers.LatLonGraticuleLayer" actuate="onRequest" />
+        <Layer className="gov.nasa.worldwind.layers.ScalebarLayer" />
+        <!--top-->
+    </LayerList>
+    <Property name="gov.nasa.worldwind.avkey.InitialLatitude" value="42.8" />
+    <Property name="gov.nasa.worldwind.avkey.InitialLongitude" value="12.6" />
+    <Property name="gov.nasa.worldwind.avkey.InitialAltitude" value="1e7" />
+</WorldWindConfiguration>

@@ -1,0 +1,15 @@
+<gml:Polygon srsName="EPSG:4326" xmlns:gml="http://www.opengis.net/gml">
+    <gml:exterior>
+        <gml:LinearRing>
+            <gml:posList>49.97 0.67 49.97 3.90 47.66 3.90 47.66 0.67 49.97 0.67</gml:posList>
+        </gml:LinearRing>
+    </gml:exterior>
+</gml:Polygon>
+
+<Polygon srsName="EPSG:4326" >
+    <exterior>
+        <LinearRing>
+            <posList>49.97 0.67 49.97 3.90 47.66 3.90 47.66 0.67 49.97 0.67</posList>
+        </LinearRing>
+    </exterior>
+</Polygon>
