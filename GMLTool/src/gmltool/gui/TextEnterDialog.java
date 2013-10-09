@@ -5,37 +5,29 @@
  */
 package gmltool.gui;
 
+import gmltool.App;
+import gmltool.Shapes;
+import java.awt.Component;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
-import javax.xml.stream.XMLEventReader;
-import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
-import javax.xml.stream.events.XMLEvent;
 
 /**
  *
- * @author sasha
+ * @author Alessandro Falappa <alessandro.falappa@telespazio.com>
  */
 public class TextEnterDialog extends javax.swing.JDialog {
 
-    /**
-     * A return status code - returned if Cancel button has been pressed
-     */
     public static final int RET_CANCEL = 0;
-    /**
-     * A return status code - returned if OK button has been pressed
-     */
     public static final int RET_OK = 1;
 
     /**
@@ -59,10 +51,6 @@ public class TextEnterDialog extends javax.swing.JDialog {
                 doClose(RET_CANCEL);
             }
         });
-
-        // prepare the StAX factory
-        fct = XMLInputFactory.newFactory();
-        fct.setProperty(XMLInputFactory.IS_NAMESPACE_AWARE, false);
     }
 
     /**
@@ -70,6 +58,16 @@ public class TextEnterDialog extends javax.swing.JDialog {
      */
     public int getReturnStatus() {
         return returnStatus;
+    }
+
+    public String getGmlText() {
+        return txGml.getText();
+    }
+
+    public String getGmlTextWrapped() {
+        StringBuilder sb = new StringBuilder("<root>");
+        sb.append(txGml.getText()).append("</root>");
+        return sb.toString();
     }
 
     /**
@@ -165,10 +163,17 @@ public class TextEnterDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
-        doClose(RET_OK);
+        try {
+            App.ge.extractShapes(getGmlTextWrapped());
+            doClose(RET_OK);
+        } catch (XMLStreamException ex) {
+            System.err.println(ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Unrecognized or malformed GML fragment!", "Enter failed", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_okButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        App.ge.clear();
         doClose(RET_CANCEL);
     }//GEN-LAST:event_cancelButtonActionPerformed
 
@@ -181,59 +186,33 @@ public class TextEnterDialog extends javax.swing.JDialog {
 
     private void bCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCheckActionPerformed
         try {
-            StringReader reader = new StringReader(getGmlTextWrapped());
-            XMLEventReader xrd = fct.createXMLEventReader(reader);
-            HashMap<String, ArrayList<String>> shapeCoords = new HashMap<>();
-            String shape = null;
-            while (xrd.hasNext()) {
-                XMLEvent xev = xrd.nextEvent();
-                System.out.println("ev=[" + xev.toString() + "]");
-                if (xev.isStartElement()) {
-                    String tagName = xev.asStartElement().getName().getLocalPart().toLowerCase();
-                    if (tagName.contains("polygon")) {
-                        shape = "poly";
-                    } else if (tagName.contains("circle")) {
-                        shape = "circle";
-                    } else if (tagName.contains("poslist")) {
-                        // skip attributes,comments and whitespace
-                        do {
-                            xev = xrd.nextEvent();
-                        } while (xrd.hasNext() && !xev.isCharacters());
-                        // store coords string
-                        assert shape != null;
-                        // see if there are similar shapes
-                        ArrayList<String> coords = shapeCoords.get(shape);
-                        if (coords == null) {
-                            // no similar shape create list of coords
-                            coords = new ArrayList<String>();
-                            shapeCoords.put(shape, coords);
-                        }
-                        // add coords to list of shape
-                        coords.add(xev.asCharacters().getData());
-                    }
-                }
-            }
-            xrd.close();
+            App.ge.extractShapes(getGmlTextWrapped());
+            showRecognizeDialog(this);
         } catch (XMLStreamException xsex) {
             System.err.println(xsex.getMessage());
             JOptionPane.showMessageDialog(this, "Unrecognized or malformed GML fragment!", "Check failed", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_bCheckActionPerformed
 
+    public static void showRecognizeDialog(Component c) throws HeadlessException {
+        HashMap<String, ArrayList<String>> shapeCoords = App.ge.getShapeCoordString();
+        StringBuilder sb = new StringBuilder("Recognized:\n");
+        if (shapeCoords.get(Shapes.POLY) != null) {
+            sb.append("   ").append(shapeCoords.get(Shapes.POLY).size()).append(" polygons\n");
+        }
+        if (shapeCoords.get(Shapes.CIRCLE) != null) {
+            sb.append("   ").append(shapeCoords.get(Shapes.CIRCLE).size()).append(" circles\n");
+        }
+        if (shapeCoords.get(Shapes.ENVELOPE) != null) {
+            sb.append("   ").append(shapeCoords.get(Shapes.ENVELOPE).size()).append(" boxes\n");
+        }
+        JOptionPane.showMessageDialog(c, sb.toString(), "Check passed", JOptionPane.INFORMATION_MESSAGE);
+    }
+
     private void doClose(int retStatus) {
         returnStatus = retStatus;
         setVisible(false);
         dispose();
-    }
-
-    public String getGmlText() {
-        return txGml.getText();
-    }
-
-    public String getGmlTextWrapped() {
-        StringBuilder sb = new StringBuilder("<root>");
-        sb.append(txGml.getText()).append("</root>");
-        return sb.toString();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -246,5 +225,4 @@ public class TextEnterDialog extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     private int returnStatus = RET_CANCEL;
-    private final XMLInputFactory fct;
 }

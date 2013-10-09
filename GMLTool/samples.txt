@@ -9,7 +9,21 @@
 <Polygon srsName="EPSG:4326" >
     <exterior>
         <LinearRing>
-            <posList>49.97 0.67 49.97 3.90 47.66 3.90 47.66 0.67 49.97 0.67</posList>
+            <posList>49.97 47.66 3.90 47.66 0.67 49.97 0.67</posList>
         </LinearRing>
     </exterior>
 </Polygon>
+
+<gml:Curve>
+  <gml:segments>
+    <gml:CircleByCenterPoint numArc="1">
+      <gml:pos>-5.71110 43.25238</gml:pos>
+      <gml:radius uom="urn:ogc:def:uom:EPSG::9001">46000</gml:radius>
+    </gml:CircleByCenterPoint>
+  </gml:segments>
+</gml:Curve>
+
+<gml:Envelope srsName="urn:ogc:def:crs:EPSG:6.3:4326">
+  <lowerCorner>2.3254 12.35745</lowerCorner>
+  <upperCorner>-5.34005 43.97600</upperCorner>
+</gml:Envelope>

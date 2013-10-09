@@ -17,6 +17,7 @@ public class App {
     public static final String VERSION = VERSION_MAJOR + "." + VERSION_MINOR;
     public static final String FRAME_TITLE = App.NAME;
 
+    public static GMLExtractor ge = new GMLExtractor();
     public static MainFrame mf = null;
 
     static {

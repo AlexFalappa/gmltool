@@ -42,6 +42,8 @@
                   <Group type="102" attributes="0">
                       <Component id="bNew" linkSize="1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Component id="bLoad" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="bClear" linkSize="1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="bInfo" min="-2" max="-2" attributes="0"/>
@@ -59,6 +61,7 @@
                   <Component id="bNew" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="bClear" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="bInfo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="bLoad" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -73,7 +76,7 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="bNew">
       <Properties>
-        <Property name="text" type="java.lang.String" value="New shape..."/>
+        <Property name="text" type="java.lang.String" value="Enter GML..."/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bNewActionPerformed"/>
@@ -91,6 +94,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="?"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bInfoActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JPanel" name="pGlobe">
       <Properties>
@@ -157,7 +163,7 @@
                   <Component id="rbMap" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="cbProj" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="352" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -205,7 +211,6 @@
               </FontInfo>
             </Property>
             <Property name="text" type="java.lang.String" value="Mode"/>
-            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JRadioButton" name="rbGlobe">
@@ -215,8 +220,10 @@
             </Property>
             <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="Globe"/>
-            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rbGlobeActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="rbMap">
           <Properties>
@@ -224,19 +231,20 @@
               <ComponentRef name="bgModeRadio"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Map"/>
-            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="rbMapItemStateChanged"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rbMapActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="cbProj">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="3">
+              <StringArray count="4">
                 <StringItem index="0" value="Plate Carr&#xe9;e"/>
                 <StringItem index="1" value="Mercator"/>
                 <StringItem index="2" value="Sinusoidal"/>
+                <StringItem index="3" value="Modified Sin."/>
               </StringArray>
             </Property>
             <Property name="enabled" type="boolean" value="false"/>
@@ -247,5 +255,13 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JButton" name="bLoad">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Load file..."/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bLoadActionPerformed"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>
