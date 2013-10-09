@@ -74,6 +74,18 @@
         <copy todir="${dist.dir}/bin">
             <fileset dir="${basedir}/bin"/>
         </copy>
+        <copy todir="${dist.dir}/lib/linux">
+            <fileset dir="${basedir}/lib/linux"/>
+        </copy>
+        <copy todir="${dist.dir}/lib/linux64">
+            <fileset dir="${basedir}/lib/linux64"/>
+        </copy>
+        <copy todir="${dist.dir}/lib/windows">
+            <fileset dir="${basedir}/lib/windows"/>
+        </copy>
+        <copy todir="${dist.dir}/lib/windows64">
+            <fileset dir="${basedir}/lib/windows64"/>
+        </copy>
         <move file="${dist.jar}" todir="${dist.dir}/lib"/>
     </target>
 </project>
