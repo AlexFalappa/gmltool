@@ -70,4 +70,10 @@
     nbproject/build-impl.xml file. 
 
     -->
+    <target name="-post-jar" description="Prepare the distributable package">
+        <copy todir="${dist.dir}/bin">
+            <fileset dir="${basedir}/bin"/>
+        </copy>
+        <move file="${dist.jar}" todir="${dist.dir}/lib"/>
+    </target>
 </project>
