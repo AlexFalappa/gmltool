@@ -48,11 +48,11 @@ public class GMLExtractor {
         return shapeCoordString;
     }
 
-    public boolean empty(){
+    public boolean empty() {
         return shapeCoordString.isEmpty();
     }
 
-    public void clear(){
+    public void clear() {
         shapeCoordString.clear();
     }
 
@@ -157,11 +157,26 @@ public class GMLExtractor {
         XMLEvent xev;
         do {
             xev = xrd.nextTag();
-        } while (xrd.hasNext() && !xev.asStartElement().getName().getLocalPart().toLowerCase().contains("poslist"));
-        // skip attributes,comments and whitespace
-        do {
-            xev = xrd.nextEvent();
-        } while (xrd.hasNext() && !xev.isCharacters());
+        } while (xrd.hasNext() && !xev.asStartElement().getName().getLocalPart().toLowerCase().contains("pos"));
+        StringBuilder sb = new StringBuilder();
+        // deal with poslist or pos
+        if (xev.asStartElement().getName().getLocalPart().toLowerCase().contains("poslist")) {
+            // skip attributes,comments and whitespace
+            do {
+                xev = xrd.nextEvent();
+            } while (xrd.hasNext() && !xev.isCharacters());
+            sb.append(xev.asCharacters().getData().trim());
+        } else {
+            do {
+                // skip attributes,comments and whitespace
+                do {
+                    xev = xrd.nextEvent();
+                } while (xrd.hasNext() && !xev.isCharacters());
+                sb.append(xev.asCharacters().getData().trim()).append(' ');
+                xev = xrd.nextTag();
+                xev = xrd.nextTag();
+            } while (xrd.hasNext() && xev.isStartElement());
+        }
         // store coords string
         ArrayList<String> coords = shapeCoordString.get(Shapes.POLY);
         // see if there are similar shapes
@@ -171,6 +186,6 @@ public class GMLExtractor {
             shapeCoordString.put(Shapes.POLY, coords);
         }
         // add coords to list of shape
-        coords.add(xev.asCharacters().getData());
+        coords.add(sb.toString());
     }
 }
