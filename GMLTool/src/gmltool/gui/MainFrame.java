@@ -24,6 +24,7 @@ import gov.nasa.worldwind.view.orbit.FlatOrbitView;
 import gov.nasa.worldwindx.examples.util.StatusLayer;
 import java.io.IOException;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.xml.stream.XMLStreamException;
@@ -44,6 +45,7 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("img/finmeccanica_logo.png")).getImage());
         setupWorldWind();
     }
 
