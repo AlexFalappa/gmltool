@@ -28,7 +28,8 @@ import javax.xml.stream.XMLStreamException;
 public class TextEnterDialog extends javax.swing.JDialog {
 
     public static final int RET_CANCEL = 0;
-    public static final int RET_OK = 1;
+    public static final int RET_REPLACE = 1;
+    public static final int RET_ADD = 2;
 
     /**
      * Creates new form TextEnterDialog
@@ -79,12 +80,13 @@ public class TextEnterDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        okButton = new javax.swing.JButton();
+        bReplace = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txGml = new javax.swing.JTextArea();
         bCheck = new javax.swing.JButton();
+        bAdd = new javax.swing.JButton();
 
         setTitle("New shape");
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -93,10 +95,10 @@ public class TextEnterDialog extends javax.swing.JDialog {
             }
         });
 
-        okButton.setText("OK");
-        okButton.addActionListener(new java.awt.event.ActionListener() {
+        bReplace.setText("Replace");
+        bReplace.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                okButtonActionPerformed(evt);
+                bReplaceActionPerformed(evt);
             }
         });
 
@@ -113,10 +115,17 @@ public class TextEnterDialog extends javax.swing.JDialog {
         txGml.setRows(20);
         jScrollPane1.setViewportView(txGml);
 
-        bCheck.setText("Check supported");
+        bCheck.setText("Check");
         bCheck.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bCheckActionPerformed(evt);
+            }
+        });
+
+        bAdd.setText("Add");
+        bAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bAddActionPerformed(evt);
             }
         });
 
@@ -131,7 +140,9 @@ public class TextEnterDialog extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(bCheck)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bAdd)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bReplace)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cancelButton))
                     .addGroup(layout.createSequentialGroup()
@@ -140,7 +151,7 @@ public class TextEnterDialog extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cancelButton, okButton});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {bAdd, bReplace, cancelButton});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,25 +163,26 @@ public class TextEnterDialog extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelButton)
-                    .addComponent(okButton)
-                    .addComponent(bCheck))
+                    .addComponent(bReplace)
+                    .addComponent(bCheck)
+                    .addComponent(bAdd))
                 .addContainerGap())
         );
 
-        getRootPane().setDefaultButton(okButton);
+        getRootPane().setDefaultButton(bReplace);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
+    private void bReplaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bReplaceActionPerformed
         try {
             App.ge.extractShapes(getGmlTextWrapped());
-            doClose(RET_OK);
+            doClose(RET_REPLACE);
         } catch (XMLStreamException ex) {
             System.err.println(ex.getMessage());
-            JOptionPane.showMessageDialog(this, "Unrecognized or malformed GML fragment!", "Enter failed", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Unrecognized or malformed GML fragment!", "Replace failed", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_okButtonActionPerformed
+    }//GEN-LAST:event_bReplaceActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         App.ge.clear();
@@ -194,6 +206,16 @@ public class TextEnterDialog extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_bCheckActionPerformed
 
+    private void bAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAddActionPerformed
+        try {
+            App.ge.extractShapes(getGmlTextWrapped());
+            doClose(RET_ADD);
+        } catch (XMLStreamException ex) {
+            System.err.println(ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Unrecognized or malformed GML fragment!", "Add failed", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_bAddActionPerformed
+
     public static void showRecognizeDialog(Component c) throws HeadlessException {
         HashMap<String, ArrayList<String>> shapeCoords = App.ge.getShapeCoordString();
         StringBuilder sb = new StringBuilder("Recognized:\n");
@@ -216,11 +238,12 @@ public class TextEnterDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bAdd;
     private javax.swing.JButton bCheck;
+    private javax.swing.JButton bReplace;
     private javax.swing.JButton cancelButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton okButton;
     private javax.swing.JTextArea txGml;
     // End of variables declaration//GEN-END:variables
 

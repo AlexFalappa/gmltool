@@ -285,21 +285,6 @@ public class MainFrame extends javax.swing.JFrame {
         wwCanvas.getModel().getLayers().add(slayer);
         // add the shape drawing layer
         wwCanvas.getModel().getLayers().add((Layer) gmlLayer);
-
-        // get position of place names layer
-//        LayerList layers = model.getLayers();
-//        int position = 0;
-//        for (Layer l : layers) {
-//            if (l instanceof PlaceNameLayer) {
-//                position = layers.indexOf(l);
-//            }
-//        }
-        // create footprints and AOI layers and add them before the place names
-        // layer
-//        footprints = new FootprintsLayer();
-//        layers.add(position, footprints);
-//        aois = new AOILayer();
-//        layers.add(position, aois);
     }
 
     private void bNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bNewActionPerformed
@@ -307,7 +292,9 @@ public class MainFrame extends javax.swing.JFrame {
         dg.setLocationRelativeTo(this);
         dg.setVisible(true);
         if (dg.getReturnStatus() == TextEnterDialog.RET_ADD) {
-            mapShapes();
+            mapShapes(false);
+        } else if (dg.getReturnStatus() == TextEnterDialog.RET_REPLACE) {
+            mapShapes(true);
         }
     }//GEN-LAST:event_bNewActionPerformed
 
@@ -350,7 +337,7 @@ public class MainFrame extends javax.swing.JFrame {
             try {
                 App.ge.extractShapes(jfc.getSelectedFile());
                 TextEnterDialog.showRecognizeDialog(this);
-                mapShapes();
+                mapShapes(true);
             } catch (XMLStreamException ex) {
                 System.err.println(ex.getMessage());
                 JOptionPane.showMessageDialog(this, "Unrecognized or malformed file!", "Loading failed", JOptionPane.ERROR_MESSAGE);
@@ -425,8 +412,10 @@ public class MainFrame extends javax.swing.JFrame {
     private gov.nasa.worldwind.awt.WorldWindowGLCanvas wwCanvas;
     // End of variables declaration//GEN-END:variables
 
-    public void mapShapes() {
-        mapClear();
+    public void mapShapes(boolean replace) {
+        if (replace) {
+            mapClear();
+        }
         int n = 1;
         ArrayList<String> shapes = App.ge.getShapeCoordString().get(Shapes.POLY);
         if (shapes != null) {
