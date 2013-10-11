@@ -1,7 +1,7 @@
 <gml:Polygon srsName="EPSG:4326" xmlns:gml="http://www.opengis.net/gml">
     <gml:exterior>
         <gml:LinearRing>
-            <gml:posList>49.97 0.67 49.97 3.90 47.66 3.90 47.66 0.67 49.97 0.67</gml:posList>
+            <gml:posList>69.97 0.67 69.97 3.90 47.66 3.90 47.66 0.67 69.97 0.67</gml:posList>
         </gml:LinearRing>
     </gml:exterior>
 </gml:Polygon>
@@ -9,10 +9,19 @@
 <Polygon srsName="EPSG:4326" >
     <exterior>
         <LinearRing>
-            <posList>49.97 47.66 3.90 47.66 0.67 49.97 0.67</posList>
+            <posList>12 23 14 25 16 21 10 19 12 23</posList>
         </LinearRing>
     </exterior>
 </Polygon>
+
+<gml:Curve>
+  <gml:segments>
+    <gml:CircleByCenterPoint numArc="1">
+      <gml:pos>45.2548 8.15478</gml:pos>
+      <gml:radius uom="urn:ogc:def:uom:EPSG::9001">150000</gml:radius>
+    </gml:CircleByCenterPoint>
+  </gml:segments>
+</gml:Curve>
 
 <gml:Curve>
   <gml:segments>
@@ -24,6 +33,11 @@
 </gml:Curve>
 
 <gml:Envelope srsName="urn:ogc:def:crs:EPSG:6.3:4326">
-  <lowerCorner>2.3254 12.35745</lowerCorner>
-  <upperCorner>-5.34005 43.97600</upperCorner>
+  <lowerCorner>-5.34005 12.35745</lowerCorner>
+  <upperCorner>2.3254 43.97600</upperCorner>
+</gml:Envelope>
+
+<gml:Envelope srsName="urn:ogc:def:crs:EPSG:6.3:4326">
+  <lowerCorner>1.34005 -85.35745</lowerCorner>
+  <upperCorner>4.3254 73.97600</upperCorner>
 </gml:Envelope>

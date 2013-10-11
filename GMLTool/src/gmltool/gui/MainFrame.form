@@ -42,7 +42,7 @@
                   <Group type="102" attributes="0">
                       <Component id="bNew" linkSize="1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="bLoad" min="-2" max="-2" attributes="0"/>
+                      <Component id="bLoad" linkSize="1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="bClear" linkSize="1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
@@ -84,7 +84,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="bClear">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Clear all shapes"/>
+        <Property name="text" type="java.lang.String" value="Clear all"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bClearActionPerformed"/>

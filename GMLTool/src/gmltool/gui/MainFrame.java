@@ -35,10 +35,10 @@ import javax.xml.stream.XMLStreamException;
  */
 public class MainFrame extends javax.swing.JFrame {
 
-    private GMLShapesLayer gmlLayer = new GMLShapesLayer();
-    private GMLExtractor extractor = new GMLExtractor();
+    private final GMLShapesLayer gmlLayer = new GMLShapesLayer();
+    private final GMLExtractor extractor = new GMLExtractor();
     private Globe globeRound;
-    private FlatGlobe globeFlat = new EarthFlat();
+    private final FlatGlobe globeFlat = new EarthFlat();
 
     /**
      * Creates new form MainFrame
@@ -86,7 +86,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        bClear.setText("Clear all shapes");
+        bClear.setText("Clear all");
         bClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bClearActionPerformed(evt);
@@ -232,7 +232,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {bClear, bNew});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {bClear, bLoad, bNew});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -306,7 +306,7 @@ public class MainFrame extends javax.swing.JFrame {
         TextEnterDialog dg = new TextEnterDialog(this, true);
         dg.setLocationRelativeTo(this);
         dg.setVisible(true);
-        if (dg.getReturnStatus() == TextEnterDialog.RET_OK) {
+        if (dg.getReturnStatus() == TextEnterDialog.RET_ADD) {
             mapShapes();
         }
     }//GEN-LAST:event_bNewActionPerformed
@@ -478,7 +478,24 @@ public class MainFrame extends javax.swing.JFrame {
                 gmlLayer.addSurfCircle(lat, lon, radius, String.valueOf(n++));
             }
         }
-        //TODO compute and draw envelopes
+        shapes = App.ge.getShapeCoordString().get(Shapes.ENVELOPE);
+        if (shapes != null) {
+            System.out.println("envelopes:");
+            for (String corners : shapes) {
+                System.out.print("  ");
+                System.out.println(corners);
+                String[] vals = corners.split("\\s");
+                if (vals.length != 4) {
+                    System.err.println("Wrong corners!");
+                    continue;
+                }
+                double lowerLat = Double.valueOf(vals[0]);
+                double lowerLon = Double.valueOf(vals[1]);
+                double upperLat = Double.valueOf(vals[2]);
+                double upperLon = Double.valueOf(vals[3]);
+                gmlLayer.addSurfSect(lowerLat, lowerLon, upperLat, upperLon, String.valueOf(n++));
+            }
+        }
     }
 
     public void mapClear() {
