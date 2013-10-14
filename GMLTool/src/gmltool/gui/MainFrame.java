@@ -73,6 +73,13 @@ public class MainFrame extends javax.swing.JFrame {
         rbGlobe = new javax.swing.JRadioButton();
         rbMap = new javax.swing.JRadioButton();
         cbProj = new javax.swing.JComboBox();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        ccbPoly = new gmltool.gui.widgets.colorbox.ColorComboBox();
+        ccbPoly1 = new gmltool.gui.widgets.colorbox.ColorComboBox();
+        ccbPoly2 = new gmltool.gui.widgets.colorbox.ColorComboBox();
         bLoad = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -161,12 +168,26 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setFont(jLabel3.getFont().deriveFont(jLabel3.getFont().getSize()+2f));
+        jLabel3.setText("Colors");
+
+        jLabel4.setText("Polygons");
+
+        jLabel5.setText("Circles");
+
+        jLabel6.setText("Boxes");
+
+        ccbPoly.setSelectedIndex(12);
+
+        ccbPoly1.setSelectedIndex(10);
+
+        ccbPoly2.setSelectedIndex(5);
+
         javax.swing.GroupLayout pViewParamsLayout = new javax.swing.GroupLayout(pViewParams);
         pViewParams.setLayout(pViewParamsLayout);
         pViewParamsLayout.setHorizontalGroup(
             pViewParamsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pViewParamsLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(pViewParamsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
@@ -178,13 +199,41 @@ public class MainFrame extends javax.swing.JFrame {
                             .addComponent(chPlaces)
                             .addComponent(chBounds)
                             .addComponent(chGrat)
-                            .addComponent(cbProj, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(cbProj, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel3))
+                .addGap(0, 18, Short.MAX_VALUE))
+            .addGroup(pViewParamsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pViewParamsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6)
+                    .addGroup(pViewParamsLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(pViewParamsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ccbPoly1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ccbPoly, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ccbPoly2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pViewParamsLayout.setVerticalGroup(
             pViewParamsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pViewParamsLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pViewParamsLayout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ccbPoly, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ccbPoly1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ccbPoly2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(chPlaces)
@@ -200,7 +249,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(rbMap)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbProj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         bLoad.setText("Load file...");
@@ -400,11 +449,18 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton bNew;
     private javax.swing.ButtonGroup bgModeRadio;
     private javax.swing.JComboBox cbProj;
+    private gmltool.gui.widgets.colorbox.ColorComboBox ccbPoly;
+    private gmltool.gui.widgets.colorbox.ColorComboBox ccbPoly1;
+    private gmltool.gui.widgets.colorbox.ColorComboBox ccbPoly2;
     private javax.swing.JCheckBox chBounds;
     private javax.swing.JCheckBox chGrat;
     private javax.swing.JCheckBox chPlaces;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel pGlobe;
     private javax.swing.JPanel pViewParams;
     private javax.swing.JRadioButton rbGlobe;
