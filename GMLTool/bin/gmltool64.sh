@@ -11,4 +11,4 @@ CLASSPATH=$CLASSPATH:../lib/jgoodies-common-1.4.0.jar
 CLASSPATH=$CLASSPATH:../lib/jgoodies-looks-2.5.2.jar
 
 #launch jvm with natives in linux folder
-java -Xmx512m -Dsun.java2d.noddraw=true -Djava.library.path=../lib/linux64 -cp $CLASSPATH gmltool.App
+java -Xms128m -Dsun.java2d.noddraw=true -Djava.library.path=../lib/linux64 -cp $CLASSPATH gmltool.App
