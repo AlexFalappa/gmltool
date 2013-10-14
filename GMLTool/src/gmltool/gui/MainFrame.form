@@ -140,7 +140,7 @@
                       </Group>
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="0" pref="18" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="21" max="32767" attributes="0"/>
               </Group>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
@@ -151,9 +151,9 @@
                       <Group type="102" attributes="0">
                           <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="ccbPoly1" min="-2" max="-2" attributes="0"/>
                               <Component id="ccbPoly" min="-2" max="-2" attributes="0"/>
-                              <Component id="ccbPoly2" min="-2" max="-2" attributes="0"/>
+                              <Component id="ccbCirc" min="-2" max="-2" attributes="0"/>
+                              <Component id="ccbBox" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -173,11 +173,11 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="ccbPoly1" min="-2" max="-2" attributes="0"/>
+                  <Component id="ccbCirc" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="ccbPoly2" min="-2" max="-2" attributes="0"/>
+                  <Component id="ccbBox" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -313,16 +313,25 @@
           <Properties>
             <Property name="selectedIndex" type="int" value="12"/>
           </Properties>
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="ccbPolyItemStateChanged"/>
+          </Events>
         </Component>
-        <Component class="gmltool.gui.widgets.colorbox.ColorComboBox" name="ccbPoly1">
+        <Component class="gmltool.gui.widgets.colorbox.ColorComboBox" name="ccbCirc">
           <Properties>
             <Property name="selectedIndex" type="int" value="10"/>
           </Properties>
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="ccbCircItemStateChanged"/>
+          </Events>
         </Component>
-        <Component class="gmltool.gui.widgets.colorbox.ColorComboBox" name="ccbPoly2">
+        <Component class="gmltool.gui.widgets.colorbox.ColorComboBox" name="ccbBox">
           <Properties>
             <Property name="selectedIndex" type="int" value="5"/>
           </Properties>
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="ccbBoxItemStateChanged"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
