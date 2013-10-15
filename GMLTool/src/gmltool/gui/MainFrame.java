@@ -22,6 +22,7 @@ import gov.nasa.worldwind.layers.SkyGradientLayer;
 import gov.nasa.worldwind.view.orbit.BasicOrbitView;
 import gov.nasa.worldwind.view.orbit.FlatOrbitView;
 import gov.nasa.worldwindx.examples.util.StatusLayer;
+import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
@@ -73,6 +74,13 @@ public class MainFrame extends javax.swing.JFrame {
         rbGlobe = new javax.swing.JRadioButton();
         rbMap = new javax.swing.JRadioButton();
         cbProj = new javax.swing.JComboBox();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        ccbPoly = new gmltool.gui.widgets.colorbox.ColorComboBox();
+        ccbCirc = new gmltool.gui.widgets.colorbox.ColorComboBox();
+        ccbBox = new gmltool.gui.widgets.colorbox.ColorComboBox();
         bLoad = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -161,12 +169,41 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setFont(jLabel3.getFont().deriveFont(jLabel3.getFont().getSize()+2f));
+        jLabel3.setText("Colors");
+
+        jLabel4.setText("Polygons");
+
+        jLabel5.setText("Circles");
+
+        jLabel6.setText("Boxes");
+
+        ccbPoly.setSelectedIndex(12);
+        ccbPoly.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ccbPolyItemStateChanged(evt);
+            }
+        });
+
+        ccbCirc.setSelectedIndex(10);
+        ccbCirc.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ccbCircItemStateChanged(evt);
+            }
+        });
+
+        ccbBox.setSelectedIndex(5);
+        ccbBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ccbBoxItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout pViewParamsLayout = new javax.swing.GroupLayout(pViewParams);
         pViewParams.setLayout(pViewParamsLayout);
         pViewParamsLayout.setHorizontalGroup(
             pViewParamsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pViewParamsLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(pViewParamsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
@@ -178,13 +215,41 @@ public class MainFrame extends javax.swing.JFrame {
                             .addComponent(chPlaces)
                             .addComponent(chBounds)
                             .addComponent(chGrat)
-                            .addComponent(cbProj, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(cbProj, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel3))
+                .addGap(0, 21, Short.MAX_VALUE))
+            .addGroup(pViewParamsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pViewParamsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6)
+                    .addGroup(pViewParamsLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(pViewParamsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ccbPoly, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ccbCirc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ccbBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pViewParamsLayout.setVerticalGroup(
             pViewParamsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pViewParamsLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pViewParamsLayout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ccbPoly, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ccbCirc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ccbBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(chPlaces)
@@ -200,7 +265,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(rbMap)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbProj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         bLoad.setText("Load file...");
@@ -393,6 +458,39 @@ public class MainFrame extends javax.swing.JFrame {
         wwCanvas.redraw();
     }//GEN-LAST:event_rbMapActionPerformed
 
+    private void ccbPolyItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ccbPolyItemStateChanged
+        Color c = null;
+        if (ccbPoly.isRandomSelected()) {
+            //TODO generate random color
+        } else {
+            c = ccbPoly.getSelectedColor();
+        }
+        this.gmlLayer.setColorPoly(c);
+        wwCanvas.redraw();
+    }//GEN-LAST:event_ccbPolyItemStateChanged
+
+    private void ccbCircItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ccbCircItemStateChanged
+        Color c = null;
+        if (ccbCirc.isRandomSelected()) {
+            //TODO generate random color
+        } else {
+            c = ccbCirc.getSelectedColor();
+        }
+        this.gmlLayer.setColorCirc(c);
+        wwCanvas.redraw();
+    }//GEN-LAST:event_ccbCircItemStateChanged
+
+    private void ccbBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ccbBoxItemStateChanged
+        Color c = null;
+        if (ccbBox.isRandomSelected()) {
+            //TODO generate random color
+        } else {
+            c = ccbBox.getSelectedColor();
+        }
+        this.gmlLayer.setColorBox(c);
+        wwCanvas.redraw();
+    }//GEN-LAST:event_ccbBoxItemStateChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bClear;
     private javax.swing.JButton bInfo;
@@ -400,11 +498,18 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton bNew;
     private javax.swing.ButtonGroup bgModeRadio;
     private javax.swing.JComboBox cbProj;
+    private gmltool.gui.widgets.colorbox.ColorComboBox ccbBox;
+    private gmltool.gui.widgets.colorbox.ColorComboBox ccbCirc;
+    private gmltool.gui.widgets.colorbox.ColorComboBox ccbPoly;
     private javax.swing.JCheckBox chBounds;
     private javax.swing.JCheckBox chGrat;
     private javax.swing.JCheckBox chPlaces;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel pGlobe;
     private javax.swing.JPanel pViewParams;
     private javax.swing.JRadioButton rbGlobe;
