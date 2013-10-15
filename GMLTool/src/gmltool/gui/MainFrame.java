@@ -270,7 +270,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        bLoad.setText("Load file...");
+        bLoad.setText("Load XML file...");
         bLoad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bLoadActionPerformed(evt);
@@ -410,7 +410,7 @@ public class MainFrame extends javax.swing.JFrame {
                 mapShapes(true);
             } catch (XMLStreamException ex) {
                 System.err.println(ex.getMessage());
-                JOptionPane.showMessageDialog(this, "Unrecognized or malformed file!", "Loading failed", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Unrecognized or malformed XML file!", "Loading failed", JOptionPane.ERROR_MESSAGE);
             } catch (IOException ex) {
                 System.err.println(ex.getMessage());
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "File problem", JOptionPane.ERROR_MESSAGE);
