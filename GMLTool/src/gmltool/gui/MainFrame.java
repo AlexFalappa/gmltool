@@ -23,6 +23,7 @@ import gov.nasa.worldwind.view.orbit.BasicOrbitView;
 import gov.nasa.worldwind.view.orbit.FlatOrbitView;
 import gov.nasa.worldwindx.examples.util.StatusLayer;
 import java.awt.Color;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
@@ -40,6 +41,7 @@ public class MainFrame extends javax.swing.JFrame {
     private final GMLExtractor extractor = new GMLExtractor();
     private Globe globeRound;
     private final FlatGlobe globeFlat = new EarthFlat();
+    private File lastLoadDir = null;
 
     /**
      * Creates new form MainFrame
@@ -179,23 +181,23 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel6.setText("Boxes");
 
         ccbPoly.setSelectedIndex(12);
-        ccbPoly.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ccbPolyItemStateChanged(evt);
+        ccbPoly.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ccbPolyActionPerformed(evt);
             }
         });
 
         ccbCirc.setSelectedIndex(10);
-        ccbCirc.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ccbCircItemStateChanged(evt);
+        ccbCirc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ccbCircActionPerformed(evt);
             }
         });
 
         ccbBox.setSelectedIndex(5);
-        ccbBox.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ccbBoxItemStateChanged(evt);
+        ccbBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ccbBoxActionPerformed(evt);
             }
         });
 
@@ -397,6 +399,9 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void bLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLoadActionPerformed
         JFileChooser jfc = new JFileChooser();
+        if (lastLoadDir != null) {
+            jfc.setCurrentDirectory(lastLoadDir);
+        }
         jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
         if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             try {
@@ -410,6 +415,7 @@ public class MainFrame extends javax.swing.JFrame {
                 System.err.println(ex.getMessage());
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "File problem", JOptionPane.ERROR_MESSAGE);
             }
+            lastLoadDir = jfc.getSelectedFile().getParentFile();
         }
     }//GEN-LAST:event_bLoadActionPerformed
 
@@ -458,38 +464,35 @@ public class MainFrame extends javax.swing.JFrame {
         wwCanvas.redraw();
     }//GEN-LAST:event_rbMapActionPerformed
 
-    private void ccbPolyItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ccbPolyItemStateChanged
-        Color c = null;
-        if (ccbPoly.isRandomSelected()) {
-            //TODO generate random color
-        } else {
-            c = ccbPoly.getSelectedColor();
+    private void ccbBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ccbBoxActionPerformed
+        System.out.println(evt.toString());
+        Color c = ccbBox.getSelectedColor();
+        if (c != null) {
+            System.out.println("non null color");
+            this.gmlLayer.setColorBox(c);
+            wwCanvas.redraw();
         }
-        this.gmlLayer.setColorPoly(c);
-        wwCanvas.redraw();
-    }//GEN-LAST:event_ccbPolyItemStateChanged
+    }//GEN-LAST:event_ccbBoxActionPerformed
 
-    private void ccbCircItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ccbCircItemStateChanged
-        Color c = null;
-        if (ccbCirc.isRandomSelected()) {
-            //TODO generate random color
-        } else {
-            c = ccbCirc.getSelectedColor();
+    private void ccbPolyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ccbPolyActionPerformed
+        System.out.println(evt.toString());
+        Color c = ccbPoly.getSelectedColor();
+        if (c != null) {
+            System.out.println("non null color");
+            this.gmlLayer.setColorPoly(c);
+            wwCanvas.redraw();
         }
-        this.gmlLayer.setColorCirc(c);
-        wwCanvas.redraw();
-    }//GEN-LAST:event_ccbCircItemStateChanged
+    }//GEN-LAST:event_ccbPolyActionPerformed
 
-    private void ccbBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ccbBoxItemStateChanged
-        Color c = null;
-        if (ccbBox.isRandomSelected()) {
-            //TODO generate random color
-        } else {
-            c = ccbBox.getSelectedColor();
+    private void ccbCircActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ccbCircActionPerformed
+        System.out.println(evt.toString());
+        Color c = ccbCirc.getSelectedColor();
+        if (c != null) {
+            System.out.println("non null color");
+            this.gmlLayer.setColorCirc(c);
+            wwCanvas.redraw();
         }
-        this.gmlLayer.setColorBox(c);
-        wwCanvas.redraw();
-    }//GEN-LAST:event_ccbBoxItemStateChanged
+    }//GEN-LAST:event_ccbCircActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bClear;
