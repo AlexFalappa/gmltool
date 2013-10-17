@@ -61,7 +61,6 @@ import javax.swing.SwingUtilities;
 public final class ColorComboBox extends JComboBox {
 
     private final boolean allowCustomColors;
-    private final boolean allowRandomEntry;
 
     private ColorValue lastSelection;
 
@@ -83,7 +82,7 @@ public final class ColorComboBox extends JComboBox {
             Color.PINK,
             Color.RED,
             Color.WHITE,
-            Color.YELLOW,}, new String[0], true, true);
+            Color.YELLOW,}, new String[0], true);
     }
 
     /**
@@ -93,12 +92,10 @@ public final class ColorComboBox extends JComboBox {
      * @param names Name of colors.
      * @param allowCustomColors True to allow users to pick a custom colors,
      * false if user can choose from given colors only.
-     * @param allowRandomEntry True to allow users to pick a "Random" entry
      */
-    public ColorComboBox(Color[] values, String[] names, boolean allowCustomColors, boolean allowRandomEntry) {
-        super.setModel(createModel(values, names, allowCustomColors, allowRandomEntry));
+    public ColorComboBox(Color[] values, String[] names, boolean allowCustomColors) {
+        super.setModel(createModel(values, names, allowCustomColors));
         this.allowCustomColors = allowCustomColors;
-        this.allowRandomEntry = allowRandomEntry;
         setEditable(false);
         setRenderer(new ColorComboBoxRendererWrapper(this));
         if (allowCustomColors) {
@@ -128,7 +125,7 @@ public final class ColorComboBox extends JComboBox {
      * @param names Names of the colors.
      */
     public void setModel(Color[] colors, String[] names) {
-        super.setModel(createModel(colors, names, allowCustomColors, allowRandomEntry));
+        super.setModel(createModel(colors, names, allowCustomColors));
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -145,16 +142,6 @@ public final class ColorComboBox extends JComboBox {
     public Color getSelectedColor() {
         ColorValue cv = (ColorValue) getSelectedItem();
         return null == cv ? null : cv.color;
-    }
-
-    /**
-     * Determine if the random entry has been selected.
-     *
-     * @return True if random entry selected.
-     */
-    public boolean isRandomSelected() {
-        ColorValue cv = (ColorValue) getSelectedItem();
-        return cv != null && cv.text == ColorValue.RANDOM_COLOR.text;
     }
 
     /**
@@ -206,7 +193,7 @@ public final class ColorComboBox extends JComboBox {
         }
     }
 
-    private static DefaultComboBoxModel createModel(Color[] colors, String[] names, boolean allowCustomColors, boolean allowRandomEntry) {
+    private static DefaultComboBoxModel createModel(Color[] colors, String[] names, boolean allowCustomColors) {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         for (int i = 0; i < colors.length; i++) {
             Color c = colors[i];
@@ -221,9 +208,6 @@ public final class ColorComboBox extends JComboBox {
         }
         if (allowCustomColors) {
             model.addElement(ColorValue.CUSTOM_COLOR);
-        }
-        if (allowRandomEntry) {
-            model.addElement(ColorValue.RANDOM_COLOR);
         }
         return model;
     }

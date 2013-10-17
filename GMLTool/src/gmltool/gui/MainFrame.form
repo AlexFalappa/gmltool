@@ -314,7 +314,7 @@
             <Property name="selectedIndex" type="int" value="12"/>
           </Properties>
           <Events>
-            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="ccbPolyItemStateChanged"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ccbPolyActionPerformed"/>
           </Events>
         </Component>
         <Component class="gmltool.gui.widgets.colorbox.ColorComboBox" name="ccbCirc">
@@ -322,7 +322,7 @@
             <Property name="selectedIndex" type="int" value="10"/>
           </Properties>
           <Events>
-            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="ccbCircItemStateChanged"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ccbCircActionPerformed"/>
           </Events>
         </Component>
         <Component class="gmltool.gui.widgets.colorbox.ColorComboBox" name="ccbBox">
@@ -330,14 +330,14 @@
             <Property name="selectedIndex" type="int" value="5"/>
           </Properties>
           <Events>
-            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="ccbBoxItemStateChanged"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ccbBoxActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
     </Container>
     <Component class="javax.swing.JButton" name="bLoad">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Load file..."/>
+        <Property name="text" type="java.lang.String" value="Load XML file..."/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bLoadActionPerformed"/>
